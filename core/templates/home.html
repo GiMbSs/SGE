@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}{{ PROJECT_TITLE }} - Home{% endblock %}
+
+
+{% block content %}
+    {% if perms.products.delete_product %}
+    {% include 'components/_product_metrics.html' %}
+    {% endif %}
+    {% if perms.outflows.add_outflow %}
+    {% include 'components/_sales_metrics.html' %}
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="row mt-4 justify-content-center">
+
+        <div class="col-md-6 text-center">
+            <h5 class="display-7">Valor de vendas (últimos 7 dias)</h5>
+            <canvas id="sales_valueChart"></canvas>
+        </div>
+        <div class="col-md-6 text-center">
+            <h5 class="display-7">Quantidade de vendas diárias (últimos 7 dias)</h5>
+            <canvas id="sales_quantityChart"></canvas>
+        </div>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        
+        <div class="col-md-6 text-center">
+            <h5 class="display-7">Quantidade de produtos vendidos (últimos 7 dias)</h5>
+            <canvas id="sales_quantity_productChart"></canvas>
+        </div>
+        <div class="col-md-6 text-center">
+            <h5 class="display-7">Produto mais vendido (últimos 7 dias)</h5>
+            <canvas id="sales_best_productChart"></canvas>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Gráfico 1: Valor de vendas
+            var salesValueData = {
+                labels: {{ sales_value_labels|safe }},
+                datasets: [{
+                    label: 'Valor de vendas',
+                    data: {{ sales_value_data|safe }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            };
+            var ctxSalesValue = document.getElementById('sales_valueChart').getContext('2d');
+            new Chart(ctxSalesValue, {
+                type: 'line',
+                data: salesValueData,
+                options: { scales: { y: { beginAtZero: true } } }
+            });
+
+            // Gráfico 2: Quantidade de vendas
+            var salesQuantityData = {
+                labels: {{ sales_quantity_labels|safe }},
+                datasets: [{
+                    label: 'Quantidade de vendas',
+                    data: {{ sales_quantity_data|safe }},
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            };
+            var ctxSalesQuantity = document.getElementById('sales_quantityChart').getContext('2d');
+            new Chart(ctxSalesQuantity, {
+                type: 'line',
+                data: salesQuantityData,
+                options: { scales: { y: { beginAtZero: true } } }
+            });
+
+            // Gráfico 3: Quantidade de produtos vendidos
+            var salesByProductData = {
+                labels: {{ sales_quantity_product_labels|safe }},
+                datasets: [{
+                    label: 'Quantidade de produtos vendidos',
+                    data: {{ sales_quantity_product_data|safe }},
+                    backgroundColor: 'rgba(75, 192, 75, 0.2)',  // Azul claro
+                    borderColor: 'rgba(75, 192, 75, 1)',  // Azul escuro
+                    borderWidth: 1
+                }]
+            };
+            var ctxSalesQuantityProduct = document.getElementById('sales_quantity_productChart').getContext('2d');
+            new Chart(ctxSalesQuantityProduct, {
+                type: 'bar',
+                data: salesByProductData,
+                options: { scales: { y: { beginAtZero: true } } }
+            });            
+            // Gráfico 4: Produto mais vendido
+            var salesBestProductData = {
+                labels: {{ sales_best_product_labels|safe }},
+                datasets: [{
+                    label: 'Produto mais vendido',
+                    data: {{ sales_best_product_data|safe }},
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)', // Amarelo claro
+                    borderColor: 'rgba(255, 206, 86, 1)', // Amarelo escuro
+                    borderWidth: 1
+                }]
+            };
+            var ctxSalesBestProduct = document.getElementById('sales_best_productChart').getContext('2d');
+            new Chart(ctxSalesBestProduct, {
+                type: 'bar',
+                data: salesBestProductData,
+                options: { 
+                    scales: { 
+                        y: { 
+                            beginAtZero: true 
+                        } 
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    var productNames = {{ sales_best_product_names|safe }};
+                                    return [
+                                        'Produto: ' + productNames[context.dataIndex],
+                                        'Quantidade: ' + context.raw
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    responsive: true
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+<div class="card mt-4">
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="card" style="background-color: var(--erp-blue); color: #fff;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Quantidade de produtos</h5>
+                        <p class="card-text text-center text-white font-weight-bold display-5">{{ product_metrics.total_quantity }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card" style="background-color: var(--erp-red); color: #fff;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Custo de estoque</h5>
+                        <p class="card-text text-center text-white font-weight-bold display-5">R${{ product_metrics.total_cost_price }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card" style="background-color: var(--erp-yellow); color: #fff;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Valor do estoque</h5>
+                        <p class="card-text text-center text-white font-weight-bold display-5">R${{ product_metrics.total_selling_price }}</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-3">
+                <div class="card" style="background-color: var(--erp-green); color: #fff;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Lucro previsto do estoque</h5>
+                        <p class="card-text text-center text-white font-weight-bold display-5">R${{ product_metrics.total_profit }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

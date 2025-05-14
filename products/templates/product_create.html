@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ PROJECT_TITLE }} - Lista de Produtos
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h3 class="display-4">Cadastrar Produto</h3>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Preencha os campos abaixo para cadastrar um novo produto</h5>
+            <form method="post" enctype="multipart/form-data" class="form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Cadastrar Produto</button>
+                <a href="{% url 'product_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if form.errors %}
+<div class="alert alert-danger mt-3">
+    <strong>Erro:</strong> Verifique os campos obrigatórios.
+</div>
+{% endif %}
+{% endblock %}

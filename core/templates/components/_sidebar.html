@@ -1,0 +1,68 @@
+<aside class="bg-dark border-end border-secondary" style="width: 250px; min-height: 100vh;">
+    <ul class="nav flex-column p-3 gap-2">
+        <!-- Título do Sidebar -->
+        <li class="nav-item mb-3">
+            <h5 class="text-white text-uppercase">Menu</h5>
+        </li>
+
+        <!-- Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">
+                <i class="bi bi-speedometer"></i> Dashboard
+            </a>
+        </li>
+        <!-- Fornecedores -->
+         {% if perms.suppliers.view_supplier %}
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.url_name == 'supplier_list' %}active{% endif %}" href="{% url 'supplier_list' %}">
+                <i class="bi bi-truck"></i> Fornecedores
+            </a>
+        </li>
+        {% endif %}
+
+        <!-- Marcas -->
+        {% if perms.brands.view_brand %}
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.url_name == 'brand_list' %}active{% endif %}" href="{% url 'brand_list' %}">
+                <i class="bi bi-r-circle"></i> Marcas
+            </a>
+        </li>
+        {% endif %}
+
+        <!-- Categorias -->
+        {% if perms.categories.view_category %}
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.url_name == 'category_list' %}active{% endif %}" href="{% url 'category_list' %}">
+                <i class="bi bi-inboxes"></i> Categorias
+            </a>
+        </li>
+        {% endif %}
+
+        <!-- Produtos -->
+        {% if perms.products.view_product %}
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}" href="{% url 'product_list' %}">
+                <i class="bi bi-box-seam"></i> Produtos
+            </a>
+        </li>
+        {% endif %}
+
+        <!-- Entradas -->
+        {% if perms.inflows.view_inflow %}
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.url_name == 'inflow_list' %}active{% endif %}" href="{% url 'inflow_list' %}">
+                <i class="bi bi-box-arrow-in-down-left"></i> Entradas
+            </a>
+        </li>
+        {% endif %}
+
+        <!-- Saídas -->
+        {% if perms.outflows.view_outflow %}
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2 {% if request.resolver_match.url_name == 'outflow_list' %}active{% endif %}" href="{% url 'outflow_list' %}">
+                <i class="bi bi-box-arrow-up-right"></i> Saídas
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</aside>

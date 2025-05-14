@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ PROJECT_TITLE }} - Excluir Marca
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 class="display-4 text-danger">Excluir Marca</h3>
+    <div class="card border-danger">
+        <div class="card-body">
+            <h5 class="card-title">Tem certeza que deseja excluir a marca abaixo?</h5>
+            <ul class="list-group mb-3">
+                <li class="list-group-item bg-dark text-white"><strong>ID:</strong> {{ brand.id }}</li>
+                <li class="list-group-item bg-dark text-white"><strong>Nome:</strong> {{ brand.name }}</li>
+                <li class="list-group-item bg-dark text-white"><strong>Descrição:</strong> {{ brand.description }}</li>
+            </ul>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+                <a href="{% url 'brand_list' %}" class="btn btn-secondary ms-2">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

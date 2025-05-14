@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ PROJECT_TITLE }} - Entradas
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h3 class="display-4">Registrar Entrada</h3>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Preencha os campos abaixo para registrar uma nova entrada</h5>
+            <form method="post" class="form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Registrar Entrada</button>
+                <a href="{% url 'inflow_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if form.errors %}
+<div class="alert alert-danger mt-3">
+    <strong>Erro:</strong> Verifique os campos obrigatórios.
+</div>
+{% endif %}
+{% endblock %}

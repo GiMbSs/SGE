@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %} {{ PROJECT_TITLE }} - lista de produtos {% endblock %}
+
+
+{% block content %}
+
+{% if perms.products.delete_product %}
+{% include 'components/_product_metrics.html' %}
+{% endif %}
+
+<div class="mb-4"></div>
+
+<div class="row mb-3">
+
+    <div class="col-md-6">
+        <form method="get" action="{% url 'product_list' %}">
+            <div class="input-group">
+                <input type="text" class="form-control" name="title" placeholder="Pesquisar produtos"
+                    value="{{ request.GET.title|default:'' }}">
+                <input type="text" class="form-control" name="serial_number" placeholder="Nº de série"
+                    value="{{ request.GET.serial_number|default:'' }}">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    {% if perms.products.add_product %}
+    <div class="col-md-6 text-end">
+        <a href="{% url 'product_create' %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Adicionar Produto
+        </a>
+    </div>
+    {% endif %}
+</div>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form method="get" action="{% url 'product_list' %}">
+            <div class="input-group" table="0">
+                <select name="category" class="form-select">
+                    <option value="" {% if not request.GET.category %}selected{% endif %}>Todas as categorias</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:'s' %}selected{% endif %}>
+                        {{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <select name="brand" class="form-select">
+                    <option value="" {% if not request.GET.brand %}selected{% endif %}>Todas as marcas</option>
+                    {% for brand in brands %}
+                    <option value="{{ brand.id }}" {% if request.GET.brand == brand.id|stringformat:'s' %}selected{% endif %}>
+                        {{ brand.name }}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-primary" type="submit">Filtrar
+                    <i class="bi bi-filter"></i>
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th colspan="9" class="text-center">Lista de Produtos</th>
+            </tr>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Marca</th>
+                <th>Preço Custo</th>
+                <th>Preço venda</th>
+                <th>Nº de série</th>
+                <th>Estoque</th>
+                <th class="text-center">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="table-dark">
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.title }}</td>
+                <td>{{ product.category.name }}</td>
+                <td>{{ product.brand.name }}</td>
+                <td>{{ product.cost_price }}</td>
+                <td>{{ product.selling_price }}</td>
+                <td>{{ product.serial_number }}</td>
+                <td>{{ product.quantity }} un</td>
+                <td class="text-center">
+                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary btn-sm" title="Detalhes">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                    {% if perms.products.change_product %}
+                    <a href="{% url 'product_update' product.id %}" class="btn btn-warning btn-sm" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    {% endif %}
+                    {% if perms.products.delete_product %}
+                    <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-sm" title="Excluir">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% include 'components/_pagination.html' %}
+{% endblock %}

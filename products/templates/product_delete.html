@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ PROJECT_TITLE }} - Excluir Produto
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 class="display-4 text-danger">Excluir Produto</h3>
+    <div class="card border-danger">
+        <div class="card-body">
+            <h5 class="card-title">Tem certeza que deseja excluir o produto abaixo?</h5>
+            <ul class="list-group mb-3">
+                <li class="list-group-item bg-dark text-white"><strong>ID:</strong> {{ product.id }}</li>
+                <li class="list-group-item bg-dark text-white"><strong>Nome:</strong> {{ product.name }}</li>
+                <li class="list-group-item bg-dark text-white"><strong>Descrição:</strong> {{ product.description }}</li>
+            </ul>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+                <a href="{% url 'product_list' %}" class="btn btn-secondary ms-2">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

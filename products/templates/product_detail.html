@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ PROJECT_TITLE }} - Detalhar Produto
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3 class="display-4 mb-4">Detalhes do Produto</h3>
+    <div class="card">
+        <div class="card-body row">
+            <div class="col-md-4 text-center">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="img-fluid rounded mb-3" alt="{{ product.title }}">
+                {% else %}
+                    <div class="bg-secondary text-white p-5 rounded mb-3">Sem imagem</div>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <h2 class="card-title">{{ product.title }}</h2>
+                <span class="badge bg-primary mb-2">ID: {{ product.id }}</span>
+                <p><strong>Descrição:</strong> {{ product.description }}</p>
+                <p><strong>Quantidade:</strong> <span class="badge bg-info">{{ product.quantity }}</span></p>
+                <p><strong>Preço de Custo:</strong> R$ {{ product.cost_price }}</p>
+                <p><strong>Preço de Venda:</strong> <span class="text-success fw-bold">R$ {{ product.selling_price }}</span></p>
+                <p><strong>Nº de série:</strong> {{ product.serial_number }}</p>
+                <p><strong>Marca:</strong> {{ product.brand.name }}</p>
+                <p><strong>Categoria:</strong> {{ product.category.name }}</p>
+                <p><strong>Fornecedor:</strong> {{ product.supplier.name }}</p>
+                <p><strong>Data de criação:</strong> {{ product.created_at|date:'d/m/Y H:i' }}</p>
+                <p><strong>Atualizado em:</strong> {{ product.updated_at|date:'d/m/Y H:i' }}</p>                
+                <a href="{% url 'product_list' %}" class="btn btn-secondary mt-3">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% if form.errors %}
+<div class="alert alert-danger mt-3">
+    <strong>Erro:</strong> Verifique os campos obrigatórios.
+</div>
+{% endif %}
+{% endblock %}

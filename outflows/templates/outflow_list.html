@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %} {{ PROJECT_TITLE }} - lista de saídas {% endblock %}
+
+
+{% block content %}
+
+{% if perms.outflows.delete_outflow %}
+{% include 'components/_sales_metrics.html' %}
+{% endif %}
+
+<div class="mb-4"></div>
+
+<div class="row mb-3">
+
+    <div class="col-md-6">
+        <form method="get" action="{% url 'outflow_list' %}">
+            <div class="input-group">
+                <input type="text" class="form-control" name="name" placeholder="Pesquisar saídas"
+                    value="{{ request.GET.name }}">
+                <button class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    {% if perms.outflows.add_outflow %}
+    <div class="col-md-6 text-end">
+        <a href="{% url 'outflow_create' %}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Registrar Saída
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th colspan="5" class="text-center">Lista de Saídas</th>
+            </tr>
+            <tr>
+                <th>ID</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Data Saída</th>
+                <th class="text-center">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="table-dark">
+            {% for outflow in outflows %}
+            <tr>
+                <td>{{ outflow.id }}</td>
+                <td>{{ outflow.product }}</td>
+                <td>{{ outflow.quantity }}</td>
+                <td>{{ outflow.created_at }}</td>
+                <td class="text-center">
+                    <a href="{% url 'outflow_detail' outflow.id %}" class="btn btn-info btn-sm" title="Detalhar Saída">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% include 'components/_pagination.html' %}
+{% endblock %}

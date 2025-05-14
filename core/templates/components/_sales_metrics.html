@@ -1,0 +1,38 @@
+<div class="card mt-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card" style="background-color: var(--erp-blue); color: #fff;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Quantidade de vendas</h5>
+                        <p class="card-text text-center text-white font-weight-bold display-5">{{ sales_metrics.total_sales }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" style="background-color: var(--erp-red); color: #fff;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Produtos vendidos</h5>
+                        <p class="card-text text-center text-white font-weight-bold display-5">{{ sales_metrics.total_products_sold }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" style="background-color: var(--erp-yellow); color: #fff;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Valor das vendas</h5>
+                        <p class="card-text text-center text-white font-weight-bold display-5">R${{ sales_metrics.total_sales_value }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card" style="background-color: var(--erp-green); color: #fff;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Lucro das vendas</h5>
+                        <p class="card-text text-center text-white font-weight-bold display-5">R${{ sales_metrics.total_sales_profit }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
