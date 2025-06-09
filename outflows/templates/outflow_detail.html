@@ -11,9 +11,10 @@
         <div class="card-body row">
             <div class="col-md-4 text-center">
                 {% if outflow.product.image %}
-                    <img src="{{ outflow.product.image.url }}" class="img-fluid rounded mb-3" alt="{{ outflow.product.title }}">
+                <img src="{{ outflow.product.image.url }}" class="img-fluid rounded mb-3"
+                    alt="{{ outflow.product.title }}">
                 {% else %}
-                    <div class="bg-secondary text-white p-5 rounded mb-3">Sem imagem</div>
+                <div class="bg-secondary text-white p-5 rounded mb-3">Sem imagem</div>
                 {% endif %}
             </div>
             <div class="col-md-8">

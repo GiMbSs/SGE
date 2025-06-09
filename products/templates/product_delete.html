@@ -16,7 +16,8 @@
             <ul class="list-group mb-3">
                 <li class="list-group-item bg-dark text-white"><strong>ID:</strong> {{ product.id }}</li>
                 <li class="list-group-item bg-dark text-white"><strong>Nome:</strong> {{ product.name }}</li>
-                <li class="list-group-item bg-dark text-white"><strong>Descrição:</strong> {{ product.description }}</li>
+                <li class="list-group-item bg-dark text-white"><strong>Descrição:</strong> {{ product.description }}
+                </li>
             </ul>
             <form method="post">
                 {% csrf_token %}
